@@ -8,8 +8,14 @@ def do_only_one():
 
 def dothis(number,wait):
   year = time.strftime ("%Y", time.localtime ())
+  month = (int (time.strftime ("%m", time.localtime ()))) % 10
+  
+  semester = "090"
 
-  os.system("/usr/bin/curl -o ./mygrade.txt --cookie ./cookie.txt --cookie-jar ./cookie.txt --user-agent Mozilla/4.0 \"http://mpovis.postech.ac.kr/mpovis/zcm/ZCMW6011.do?pType=normal_search&iPeryr="+year+"&iPerid=092\" >> ./trash.txt 2>&1")
+  if month < 4:
+    semester = "092"
+
+  os.system("/usr/bin/curl -o ./mygrade.txt --cookie ./cookie.txt --cookie-jar ./cookie.txt --user-agent Mozilla/4.0 \"http://mpovis.postech.ac.kr/mpovis/zcm/ZCMW6011.do?pType=normal_search&iPeryr="+year+"&iPerid="+semester+"\" >> ./trash.txt 2>&1")
 
   f = open("./mygrade.txt","r")
 
