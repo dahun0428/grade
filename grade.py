@@ -4,7 +4,7 @@ import time
 import getpass
 import re
 def do_only_one():
-  os.system("curl -o ./meaningless.txt --cookie ./cookie.txt --cookie-jar ./cookie.txt --user-agent Mozilla/4.0 -X POST --data \"j_username="+username+"&j_password="+password+"&last_login_id_save=1\" http://mpovis.postech.ac.kr/mpovis/login.do > ./trash.txt 2>&1")  
+  os.system("/usr/bin/curl -o ./.meaningless.txt --cookie ./cookie.txt --cookie-jar ./.cookie.txt --user-agent Mozilla/4.0 -X POST --data \"j_username="+username+"&j_password="+password+"&last_login_id_save=1\" http://mpovis.postech.ac.kr/mpovis/login.do > ./.trash.txt 2>&1")  
 
 def dothis(number,wait):
   year = time.strftime ("%Y", time.localtime ())
@@ -15,9 +15,9 @@ def dothis(number,wait):
   if month < 4:
     semester = "092" # or fall
 
-  os.system("/usr/bin/curl -o ./mygrade.txt --cookie ./cookie.txt --cookie-jar ./cookie.txt --user-agent Mozilla/4.0 \"http://mpovis.postech.ac.kr/mpovis/zcm/ZCMW6011.do?pType=normal_search&iPeryr="+year+"&iPerid="+semester+"\" >> ./trash.txt 2>&1")
+  os.system("/usr/bin/curl -o ./.mygrade.txt --cookie ./.cookie.txt --cookie-jar ./.cookie.txt --user-agent Mozilla/4.0 \"http://mpovis.postech.ac.kr/mpovis/zcm/ZCMW6011.do?pType=normal_search&iPeryr="+year+"&iPerid="+semester+"\" >> ./.trash.txt 2>&1")
 
-  f = open("./mygrade.txt","r")
+  f = open("./.mygrade.txt","r")
   
   grade_file = open (".grade.txt","w")
 
@@ -56,7 +56,7 @@ def dothis(number,wait):
 
 
 if __name__ == "__main__":
-  os.system ("/bin/rm cookie.txt 2>/dev/null ;/bin/rm meaningless.txt 2>/dev/null; /bin/rm ./trash.txt 2>/dev/null")
+  os.system ("/bin/rm ./.cookie.txt 2>/dev/null ;/bin/rm ./.meaningless.txt 2>/dev/null; /bin/rm ./.trash.txt 2>/dev/null")
   username = raw_input ("input your POVIS ID: ")
   password = getpass.getpass ("input your password: ")
 #  number = raw_input ("the number of subjects: ")
@@ -65,8 +65,8 @@ if __name__ == "__main__":
   wait = 1
   do_only_one ()
   while 1:
+    os.system ("/usr/bin/clear")
     print time.strftime ("%Y-%m-%d %A %I:%M", time.localtime ())
     dothis (number, wait)
     time.sleep (10)
-    os.system ("/usr/bin/clear")
 
