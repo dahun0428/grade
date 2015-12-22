@@ -10,18 +10,20 @@ def dothis(number,wait):
   year = time.strftime ("%Y", time.localtime ())
   month = (int (time.strftime ("%m", time.localtime ()))) % 10
   
-  semester = "090"
+  semester = "090" # defalut semester: spring
 
   if month < 4:
-    semester = "092"
+    semester = "092" # or fall
 
   os.system("/usr/bin/curl -o ./mygrade.txt --cookie ./cookie.txt --cookie-jar ./cookie.txt --user-agent Mozilla/4.0 \"http://mpovis.postech.ac.kr/mpovis/zcm/ZCMW6011.do?pType=normal_search&iPeryr="+year+"&iPerid="+semester+"\" >> ./trash.txt 2>&1")
 
   f = open("./mygrade.txt","r")
+  
+  grade_file = open (".grade.txt","w")
 
   while 1:
     line = f.readline()
-    if "Completed" in line:
+    if "Completed" in line: #find proper line
       break
 
   while 1:
@@ -40,9 +42,15 @@ def dothis(number,wait):
         print "\tGrade: ", grade
       else:
         print ""
+    
+      grade_file.write (subject)
+      grade_file.write (courseNo)
+      grade_file.write (grade)
+
         
 
     elif "</html>" in line:
+      grade_file.close ()
       break
 
 
